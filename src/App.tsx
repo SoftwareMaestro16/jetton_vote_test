@@ -22,6 +22,7 @@ function App() {
           WebAppSDK.ready();
           WebAppSDK.enableClosingConfirmation();
           WebAppSDK.expand();
+          WebAppSDK.headerColor = "#46c748";
           setIsTg(true);
 
           document.body.style.backgroundColor = 'var(--tg-theme-bg-color)';
