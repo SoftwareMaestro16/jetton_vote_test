@@ -1,0 +1,187 @@
+body {
+    background: linear-gradient(0deg, 
+      #07810d,
+      #ffffff
+      ) !important;
+}
+
+  /* App.css */
+  
+  /* Ensuring the entire app takes up full height */
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .TonConnectUIProvider {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  }
+  
+  .header {
+  margin-bottom: 1rem;
+  }
+  
+  .sendTx {
+  margin-bottom: 1rem;
+  }
+  
+  .settings {
+  margin-bottom: 1rem;
+  }
+  
+  .nft-item-index {
+  text-align: center;
+  }
+  
+  /* Optional: Ensuring responsiveness */
+  @media (max-width: 600px) {
+  .header,
+  .sendTx,
+  .settings {
+    width: 90%;
+  }
+  
+  .nft-item-index {
+    width: 100%;
+    font-size: 1rem;
+  }
+  
+  
+  }
+  
+  .nft-item-index {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #f79ee9, #e144f2); /* Gradient background */
+    border: 2px solid white; /* White border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 2px 16px; /* Padding adjusted for responsive design */
+    color: white; /* White text color */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Centered text */
+    max-width: 90%; /* Responsive width */
+    max-height: 10%;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif; /* Include padding and border in element's total width and height */
+  }
+  
+  /* Optional media query for better responsiveness */
+  @media (max-width: 600px) {
+    .nft-item-index {
+      font-size: 20px; /* Smaller font size for smaller screens */
+      padding: 0px 10px; /* Reduced padding for smaller screens */
+    }
+  }
+  
+  .mint-button {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+    background: linear-gradient(45deg, #5acf73, #07b12c); /* Gradient background */
+    border: 2px solid white; /* White border */
+    color: white; /* White text */
+    font-weight: bold; /* Bold text */
+    font-size: 1.2rem; /* Slightly larger text */
+    padding: 9px 46px; /* Padding around text */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    outline: none; /* Remove default focus outline */
+    transition: background 0.3s, transform 0.3s; /* Smooth transition for background and transform */
+  }
+  
+  .mint-button:hover {
+    background: linear-gradient(45deg, #5acf73, #07b12c); /* Gradient background */
+    transform: translate(-50%, -50%) scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  .mint-button:focus {
+    outline: none; /* Remove focus outline */
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); /* Add a subtle focus outline */
+  }
+  
+  * {
+    outline: none;
+  }
+  
+  button {
+    user-select: none;
+  }
+  
+  button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: none; /* Remove any shadow that might be applied */
+  }
+  
+  .mint-button-2 {
+    position: absolute;
+    top: 72%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+    background: linear-gradient(45deg, #5acf73, #07b12c); /* Gradient background */
+    border: 2px solid white; /* White border */
+    color: white; /* White text */
+    font-weight: bold; /* Bold text */
+    font-size: 1.2rem; /* Slightly larger text */
+    padding: 10px 40px; /* Padding around text */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    outline: none; /* Remove default focus outline */
+    transition: background 0.3s, transform 0.3s; /* Smooth transition for background and transform */
+  }
+  
+  .mint-button-2:hover {
+    background: linear-gradient(45deg, #5acf73, #07b12c); /* Gradient background */
+    transform: translate(-50%, -50%) scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  .mint-button-2:focus {
+    outline: none; /* Remove focus outline */
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); /* Add a subtle focus outline */
+  }
+  
+  /* App.css */
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0; /* Добавьте отступ, чтобы разделить изображение и содержимое ниже */
+  }
+  
+  .example-image {
+    border: 5px solid white; /* Белая обводка */
+    border-radius: 15px; /* Закругленные углы */
+    top: 15%;
+    width: 80%;
+    position: absolute;
+  }
+  
+  .fees {
+    color: white;
+    font-weight: bold;
+    background: linear-gradient(45deg, #f131f1, #f189ff);
+    text-align: center;
+    position: absolute;
+    top: 80%; /* Центрирование по вертикали */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translate(-50%, -50%); /* Смещение для точного центрирования */
+    padding: 4px; /* Отступы внутри элемента */
+    border: 3px solid white; /* Белая обводка */
+    border-radius: 10px; /* Скругление углов обводки */
+    background-size: 100% 100%; /* Размеры фона (можно настроить) */
+    width: 190px; /* Ширина элемента */
+    height: 20px; /* Высота элемента */
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: -1; /* Понижает элемент относительно других с большим z-index */
+    font-size: 19px;
+  }
+  
+  

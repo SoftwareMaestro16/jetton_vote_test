@@ -5,85 +5,162 @@ import {
     useTonConnectUI,
     useTonWallet
 } from "@tonconnect/ui-react";
-import {Address, beginCell, Cell} from "@ton/core";
-import {getJettonWalletAddress, waitForTx} from "./tonapi.ts";
+import {Address, beginCell, toNano} from "@ton/core";
 import {useState} from "react";
-import {USDT} from "./constants.ts";
 
-export const SendTx = () => {
+interface SendTxProps {
+    friendlyAddress: string | null;
+}
+
+
+export const SendTx = ({ friendlyAddress }: SendTxProps) => {
+    console.log('Received friendlyAddress:', friendlyAddress); // Add this line for debugging
+
     const wallet = useTonWallet();
     const isRestored = useIsConnectionRestored();
-    const { open } = useTonConnectModal();
+    useTonConnectModal();
     const [tonConnectUi] = useTonConnectUI();
-    const [txInProgress, setTxInProgress] = useState(false);
+    const [, setTxInProgress] = useState(false);
 
-    const onSendTx = async () => {
+    const onSendMint8 = async () => {
+        if (!wallet) {
+            console.error('Wallet is not connected');
+            return;
+        }
+        
+        if (!friendlyAddress) {
+            console.error('Friendly address is not available');
+            return;
+        }
+    
         setTxInProgress(true);
-
-        const jwAddress = await getJettonWalletAddress(USDT.toRawString(), wallet!.account.address);
-
-        /*
-        transfer#0x0f8a7ea5
-        query_id:uint64
-         amount:VarUInteger 16
-          destination:MsgAddress
-          response_destination:MsgAddress
-          custom_payload:Maybe ^Cell
-           forward_ton_amount:VarUInteger 16
-            forward_payload:Either Cell ^Cell = InternalMsgBody
-         */
-
-        const payload = beginCell()
-            .storeUint(0x0f8a7ea5, 32)
-            .storeUint(0, 64)
-            .storeCoins(1)
-            .storeAddress(Address.parse('UQCA6d29vC2UHcjWIzXt5fOr1W83PqqFZEc6C4K77QnwkcAj'))
-            .storeAddress(null)
-            .storeMaybeRef()
-            .storeCoins(0)
-            .storeMaybeRef()
-        .endCell().toBoc().toString('base64');
-
-        const tx: SendTransactionRequest = {
-            validUntil: Math.round(Date.now() / 1000) + 60 * 5,
-            messages: [
-                {
-                    address: jwAddress,
-                    amount: '300000000',
-                    payload
-                }
-            ]
-        }
-
-
-        const result = await tonConnectUi.sendTransaction(tx, {
-            modals: 'all',
-            notifications: ['error']
-        });
-        const imMsgCell = Cell.fromBase64(result.boc);
-        const inMsgHash = imMsgCell.hash().toString('hex');
-
+    
         try {
-            const tx = await waitForTx(inMsgHash);
-            console.log(tx);
+            const ownerAddress = Address.parse(friendlyAddress);
+    
+            const payloadCell = beginCell()
+                .storeUint(1, 32)
+                .storeUint(123, 64)
+                // .storeUint(parseInt(itemIndex), 64)
+                .storeCoins(toNano(0.05))
+                .storeRef(beginCell()
+                    .storeAddress(ownerAddress)
+                    .storeRef(
+                        beginCell().storeStringTail('JettonVote8.json').endCell()
+                    )
+                    .storeAddress(ownerAddress)
+                    .endCell()
+                )
+                .endCell();
+    
+            const payload = payloadCell.toBoc().toString('base64');
+    
+            const tx: SendTransactionRequest = {
+                validUntil: Math.round(Date.now() / 1000) + 60 * 5,
+                messages: [
+                    {
+                        address: "EQBrjR3dqE8dfzhdrIRoBgF_c-CjQje4-_kKSLya9Ea-RsiH",
+                        amount: '55000000',
+                        payload                 
+                    },
+                    {
+                        address: "0QCsMm47egxSofgw5Y-l34ZeMw6vPYUUyTIjYT3HTafpmH9O",
+                        amount: '80000000',                 
+                    }
+                ]
+            };
+    
+            const result = await tonConnectUi.sendTransaction(tx, {
+                modals: 'all',
+                notifications: ['error']
+            });
+    
+            console.log('Transaction sent successfully:', result);
+            // Optionally handle any other logic here
+    
         } catch (e) {
-            console.log(e);
+            console.error('Error sending transaction:', e);
+        } finally {
+            setTxInProgress(false);
         }
+    };
 
-        setTxInProgress(false);
-    }
+    const onSendMint88 = async () => {
+        if (!wallet) {
+            console.error('Wallet is not connected');
+            return;
+        }
+        
+        if (!friendlyAddress) {
+            console.error('Friendly address is not available');
+            return;
+        }
+    
+        setTxInProgress(true);
+    
+        try {
+            const ownerAddress = Address.parse(friendlyAddress);
+    
+            const payloadCell = beginCell()
+                .storeUint(1, 32)
+                .storeUint(123, 64)
+                // .storeUint(parseInt(itemIndex), 64)
+                .storeCoins(toNano(0.05))
+                .storeRef(beginCell()
+                    .storeAddress(ownerAddress)
+                    .storeRef(
+                        beginCell().storeStringTail('JettonVote88.json').endCell()
+                    )
+                    .storeAddress(ownerAddress)
+                    .endCell()
+                )
+                .endCell();
+    
+            const payload = payloadCell.toBoc().toString('base64');
+    
+            const tx: SendTransactionRequest = {
+                validUntil: Math.round(Date.now() / 1000) + 60 * 5,
+                messages: [
+                    {
+                        address: "EQBrjR3dqE8dfzhdrIRoBgF_c-CjQje4-_kKSLya9Ea-RsiH",
+                        amount: '55000000',
+                        payload                 
+                    },
+                    {
+                        address: "0QCsMm47egxSofgw5Y-l34ZeMw6vPYUUyTIjYT3HTafpmH9O",
+                        amount: '80000000',                 
+                    }
+                ]
+            };
+    
+            const result = await tonConnectUi.sendTransaction(tx, {
+                modals: 'all',
+                notifications: ['error']
+            });
+    
+            console.log('Transaction sent successfully:', result);
+            // Optionally handle any other logic here
+    
+        } catch (e) {
+            console.error('Error sending transaction:', e);
+        } finally {
+            setTxInProgress(false);
+        }
+    };
+
 
     if (!isRestored) {
         return 'Loading...';
     }
 
     if (!wallet) {
-        return <button onClick={open}>Connect wallet</button>
+        return;
     }
 
-    return <button onClick={onSendTx} disabled={txInProgress}>
-        {txInProgress ? 'Tx in progress...' :
-            'SendTx'
-        }
-            </button>
+    return (
+        <>
+            <button className="mint-button" onClick={onSendMint8}> Mint 8 Vote </button>
+            <button className="mint-button-2" onClick={onSendMint88}> Mint 88 Vote </button>
+        </>   
+    )
 }
