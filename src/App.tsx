@@ -70,7 +70,7 @@ function App() {
       actionsConfiguration={{
         modals: 'all',
         notifications: ['error'],
-        // twaReturnUrl: 'https://t.me/jettonvotebot/start' // return back in mini app if connected
+        twaReturnUrl: 'https://t.me/jettonvotemintbot/mint' // return back in mini app if connected
       }}
     >
       <div style={{
